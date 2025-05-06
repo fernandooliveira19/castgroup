@@ -1,0 +1,4 @@
+--CREATE TABLE IF NOT EXISTS agencia(
+--    id UUID PRIMARY KEY,
+--    codigo VARCHAR(100) NOT NULL
+--);
