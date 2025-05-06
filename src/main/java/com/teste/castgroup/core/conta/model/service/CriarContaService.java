@@ -35,7 +35,7 @@ public class CriarContaService implements CriarContaUseCase {
 
         List<ContaDetailResponse> response = new ArrayList<>();
 
-        agenciaRepository.findByCodigo(request.getNumeroAgencia()).ifPresentOrElse(
+        agenciaRepository.findByCodigo(request.getCodigoAgencia()).ifPresentOrElse(
                 agencia -> {
 
                     if(contaRepository.findByAgenciaAndNumero(agencia.getCodigo(), request.getNumeroConta())

@@ -10,10 +10,12 @@ import com.teste.castgroup.core.conta.model.usecase.DebitarValorContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.TransferirValorContaUseCase;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/contas")
@@ -31,22 +33,21 @@ public class ContaController {
         this.transferirValorContaUseCase = transferirValorContaUseCase;
     }
 
-    @GetMapping("")
-    public String home(){
-        return "home";
-    }
+
 
     @GetMapping("/cadastrar")
-    public String cadastrar(){
+    public String cadastrar(CriarContaRequest request){
         return "contas/cadastro";
     }
 
-    @PostMapping
-    public String criar(@RequestBody CriarContaRequest request){
+    @PostMapping(path="/criar")
+    public String criar(CriarContaRequest request, RedirectAttributes attr){
 
         criarContaUseCase.handle(request);
 
-        return "redirect:criar";
+        attr.addFlashAttribute("success", "Conta cadastrada com sucesso");
+
+        return "redirect:cadastrar";
     }
 
     @PutMapping(path = "/creditar")

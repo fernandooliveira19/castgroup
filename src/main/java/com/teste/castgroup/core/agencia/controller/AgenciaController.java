@@ -26,7 +26,7 @@ public class AgenciaController {
         return "agencias/cadastro";
     }
 
-    @PostMapping(value = "/criar" )
+    @PostMapping(path = "/criar" )
     public String criar(@ModelAttribute CriarAgenciaRequest request, RedirectAttributes attr) {
 
         criarAgenciaUseCase.handle(request);

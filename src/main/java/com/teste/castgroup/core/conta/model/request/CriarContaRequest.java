@@ -2,24 +2,24 @@ package com.teste.castgroup.core.conta.model.request;
 
 public class CriarContaRequest {
 
-    private String numeroAgencia;
+    private String codigoAgencia;
     private String numeroConta;
 
 
     public CriarContaRequest() {
     }
 
-    public CriarContaRequest(String numeroAgencia, String numeroConta) {
-        this.numeroAgencia = numeroAgencia;
+    public CriarContaRequest(String codigoAgencia, String numeroConta) {
+        this.codigoAgencia = codigoAgencia;
         this.numeroConta = numeroConta;
     }
 
-    public String getNumeroAgencia() {
-        return numeroAgencia;
+    public String getCodigoAgencia() {
+        return codigoAgencia;
     }
 
-    public void setNumeroAgencia(String numeroAgencia) {
-        this.numeroAgencia = numeroAgencia;
+    public void setCodigoAgencia(String codigoAgencia) {
+        this.codigoAgencia = codigoAgencia;
     }
 
     public String getNumeroConta() {
