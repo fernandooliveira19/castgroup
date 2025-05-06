@@ -1,6 +1,6 @@
-package com.teste.castgroup.conta.model.repository;
+package com.teste.castgroup.core.agencia.model.repository;
 
-import com.teste.castgroup.conta.model.entity.Agencia;
+import com.teste.castgroup.core.agencia.model.entity.Agencia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

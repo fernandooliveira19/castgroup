@@ -1,8 +1,7 @@
-package com.teste.castgroup.conta.model.entity;
+package com.teste.castgroup.core.agencia.model.entity;
 
+import com.teste.castgroup.core.agencia.controller.AgenciaController;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.util.UUID;
@@ -10,10 +9,18 @@ import java.util.UUID;
 @Entity(name="agencia")
 public class Agencia {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String codigo;
+
+
+    public Agencia criar(String codigo){
+        this.id = UUID.randomUUID();
+        this.codigo = codigo;
+
+        return this;
+
+    }
 
     public UUID getId() {
         return id;

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}"
+	xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/></head>
+<body>
+	    <section class="layout-content" layout:fragment="corpo">
+	
+	        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Criar Agencia</span>
+	                    </li>
+	                </ul>
+	            </div>
+	        </nav>
+	
+	        <div class="container" id="cadastro">
+	        
+	        	<div th:replace="fragments/alert"></div>
+	        	
+	            <form method="POST" action="criar" th:object="${request}">
+	                <div class="form-row">
+	                    <div class="form-group col-md-6">
+	                        
+	                        <input type="text" class="form-control" id="codigo" placeholder="Codigo" autofocus="autofocus"
+	                               name="codigo" required="true"/>
+	                    </div>
+	                 </div>
+
+	                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+	                
+	            </form>
+	        </div>
+	    </section>
+</body>
+</html>		
