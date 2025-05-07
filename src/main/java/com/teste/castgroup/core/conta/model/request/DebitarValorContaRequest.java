@@ -1,11 +1,15 @@
 package com.teste.castgroup.core.conta.model.request;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import java.math.BigDecimal;
 
 public class DebitarValorContaRequest {
 
     private String codigoAgencia;
     private String numeroConta;
+    @NumberFormat(style= Style.CURRENCY, pattern="#,##0.00")
     private BigDecimal valor;
 
     public DebitarValorContaRequest(){

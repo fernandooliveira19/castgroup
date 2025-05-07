@@ -1,5 +1,6 @@
 package com.teste.castgroup.core.conta.model.service;
 
+import com.teste.castgroup.core.conta.model.exception.ContaException;
 import com.teste.castgroup.core.conta.model.messages.ContaMessages;
 import com.teste.castgroup.core.conta.model.repository.ContaRepository;
 import com.teste.castgroup.core.conta.model.request.DebitarValorContaRequest;
@@ -7,13 +8,14 @@ import com.teste.castgroup.core.conta.model.response.ContaDetailResponse;
 import com.teste.castgroup.core.conta.model.usecase.DebitarValorContaUseCase;
 import com.teste.castgroup.utils.MessageUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-
+@Transactional
 public class DebitarValorContaService implements DebitarValorContaUseCase {
 
     private final ContaRepository contaRepository;
@@ -48,7 +50,7 @@ public class DebitarValorContaService implements DebitarValorContaUseCase {
     private void validarOperacaoDebito(BigDecimal saldo, BigDecimal valorDebito){
 
         if(valorDebito.compareTo(saldo) > 0){
-            throw new RuntimeException("Saldo insufiente para a operacao");
+            throw new ContaException("Saldo insufiente para a operacao");
         }
     }
 }

@@ -40,7 +40,7 @@ public class Conta {
     }
 
     public Conta debitar(BigDecimal valor){
-        this.saldo = saldo.min(valor);
+        this.saldo = saldo.subtract(valor);
         return this;
     }
 

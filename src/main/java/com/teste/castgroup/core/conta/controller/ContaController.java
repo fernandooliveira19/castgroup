@@ -50,6 +50,11 @@ public class ContaController {
         return "contas/credito";
     }
 
+    @GetMapping("/debito")
+    public String debito(){
+        return "contas/debito";
+    }
+
     @GetMapping("/detalhe")
     public ModelAndView detalhe(){
         ModelAndView modelAndView = new ModelAndView("contas/detalhe");
@@ -80,10 +85,12 @@ public class ContaController {
         return modelAndView;
     }
 
-    @PutMapping(path = "/debitar")
-    public String debitar(@RequestBody DebitarValorContaRequest request){
-        debitarValorContaUseCase.handle(request);
-        return "";
+    @PostMapping(path = "/debitar")
+    public ModelAndView debitar(DebitarValorContaRequest request){
+        ContaDetailResponse response = debitarValorContaUseCase.handle(request);
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        modelAndView.addObject("conta", response);
+        return modelAndView;
     }
 
     @PutMapping(path = "/transferir")
