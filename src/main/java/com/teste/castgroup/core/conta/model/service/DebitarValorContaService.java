@@ -44,7 +44,7 @@ public class DebitarValorContaService implements DebitarValorContaUseCase {
                 }
         );
 
-        return response.stream().findAny().orElse(null);
+        return response.stream().findAny().orElse(new ContaDetailResponse());
     }
 
     private void validarOperacaoDebito(BigDecimal saldo, BigDecimal valorDebito){

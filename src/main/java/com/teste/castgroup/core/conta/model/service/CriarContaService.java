@@ -52,6 +52,6 @@ public class CriarContaService implements CriarContaUseCase {
                 }
         );
 
-        return response.stream().findAny().orElse(null);
+        return response.stream().findAny().orElse(new ContaDetailResponse());
     }
 }

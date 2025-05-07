@@ -41,6 +41,6 @@ public class CreditarValorContaService implements CreditarValorContaUseCase {
                 }
         );
 
-        return response.stream().findAny().orElse(null);
+        return response.stream().findAny().orElse(new ContaDetailResponse());
     }
 }

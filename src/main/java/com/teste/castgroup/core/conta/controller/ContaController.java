@@ -1,10 +1,12 @@
 package com.teste.castgroup.core.conta.controller;
 
+import com.teste.castgroup.core.conta.model.request.BuscarContaRequest;
 import com.teste.castgroup.core.conta.model.request.CreditarValorContaRequest;
 import com.teste.castgroup.core.conta.model.request.CriarContaRequest;
 import com.teste.castgroup.core.conta.model.request.DebitarValorContaRequest;
 import com.teste.castgroup.core.conta.model.request.TransferirValorContaRequest;
 import com.teste.castgroup.core.conta.model.response.ContaDetailResponse;
+import com.teste.castgroup.core.conta.model.usecase.BuscarContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.CreditarValorContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.CriarContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.DebitarValorContaUseCase;
@@ -31,23 +33,25 @@ public class ContaController {
     private final CreditarValorContaUseCase creditarValorContaUseCase;
     private final DebitarValorContaUseCase debitarValorContaUseCase;
     private final TransferirValorContaUseCase transferirValorContaUseCase;
+    private final BuscarContaUseCase buscarContaUseCase;
 
-    public ContaController(CriarContaUseCase criarContaUseCase, CreditarValorContaUseCase creditarValorContaUseCase, DebitarValorContaUseCase debitarValorContaUseCase, TransferirValorContaUseCase transferirValorContaUseCase) {
+    public ContaController(CriarContaUseCase criarContaUseCase, CreditarValorContaUseCase creditarValorContaUseCase, DebitarValorContaUseCase debitarValorContaUseCase, TransferirValorContaUseCase transferirValorContaUseCase, BuscarContaUseCase buscarContaUseCase) {
         this.criarContaUseCase = criarContaUseCase;
         this.creditarValorContaUseCase = creditarValorContaUseCase;
         this.debitarValorContaUseCase = debitarValorContaUseCase;
         this.transferirValorContaUseCase = transferirValorContaUseCase;
+        this.buscarContaUseCase = buscarContaUseCase;
     }
 
 
 
     @GetMapping("/cadastro")
-    public String cadastrar(CriarContaRequest request){
+    public String cadastrar(){
         return "contas/cadastro";
     }
 
     @GetMapping("/credito")
-    public String credito(CreditarValorContaRequest request){
+    public String credito(){
         return "contas/credito";
     }
 
@@ -62,10 +66,9 @@ public class ContaController {
     }
 
     @GetMapping("/busca")
-    public ModelAndView detalhe(){
-        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
-        modelAndView.addObject("numeroConta", "45");
-        return modelAndView;
+    public String busca(){
+
+        return "contas/busca";
     }
 
     @PostMapping(path="/criar")
@@ -110,8 +113,10 @@ public class ContaController {
     @GetMapping(path = "/buscar")
     public ModelAndView buscar(@RequestParam("codigoAgencia") String codigoAgencia, @RequestParam("numeroConta") String numeroConta){
 
+        ContaDetailResponse response = buscarContaUseCase.handle(new BuscarContaRequest(codigoAgencia, numeroConta));
+
         ModelAndView modelAndView = new ModelAndView("contas/detalhe");
-        modelAndView.addObject("conta", new ContaDetailResponse());
+        modelAndView.addObject("conta", response);
         return modelAndView;
     }
 
