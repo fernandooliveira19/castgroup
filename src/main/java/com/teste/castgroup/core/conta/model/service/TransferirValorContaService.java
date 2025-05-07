@@ -26,11 +26,11 @@ public class TransferirValorContaService implements TransferirValorContaUseCase 
     public ContaDetailResponse handle(TransferirValorContaRequest request) {
         DebitarValorContaRequest debitarValorContaRequest =
                 new DebitarValorContaRequest(
-                        request.getCodigoAgenciaOrigem(), request.getNumeroContaOrigem(), request.getValor());
+                        request.getCodigoAgenciaDebito(), request.getNumeroContaDebito(), request.getValor());
         ContaDetailResponse contaDetailResponse = debitarValorContaService.handle(debitarValorContaRequest);
 
         CreditarValorContaRequest creditarValorContaRequest =
-                new CreditarValorContaRequest(request.getCodigoAgenciaDestino(), request.getNumeroContaDestino(), request.getValor());
+                new CreditarValorContaRequest(request.getCodigoAgenciaCredito(), request.getNumeroContaCredito(), request.getValor());
         creditarValorContaService.handle(creditarValorContaRequest);
         return contaDetailResponse;
     }

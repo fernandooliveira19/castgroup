@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -55,7 +56,12 @@ public class ContaController {
         return "contas/debito";
     }
 
-    @GetMapping("/detalhe")
+    @GetMapping("/transferencia")
+    public String transferencia(){
+        return "contas/transferencia";
+    }
+
+    @GetMapping("/busca")
     public ModelAndView detalhe(){
         ModelAndView modelAndView = new ModelAndView("contas/detalhe");
         modelAndView.addObject("numeroConta", "45");
@@ -93,10 +99,20 @@ public class ContaController {
         return modelAndView;
     }
 
-    @PutMapping(path = "/transferir")
-    public String transferir(@RequestBody TransferirValorContaRequest request){
-        transferirValorContaUseCase.handle(request);
-        return "";
+    @PostMapping(path = "/transferir")
+    public ModelAndView transferir(TransferirValorContaRequest request){
+        ContaDetailResponse response = transferirValorContaUseCase.handle(request);
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        modelAndView.addObject("conta", response);
+        return modelAndView;
+    }
+
+    @GetMapping(path = "/buscar")
+    public ModelAndView buscar(@RequestParam("codigoAgencia") String codigoAgencia, @RequestParam("numeroConta") String numeroConta){
+
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        modelAndView.addObject("conta", new ContaDetailResponse());
+        return modelAndView;
     }
 
 }

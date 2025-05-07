@@ -1,47 +1,50 @@
 package com.teste.castgroup.core.conta.model.request;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import java.math.BigDecimal;
 
 public class TransferirValorContaRequest {
 
-    private String codigoAgenciaOrigem;
-    private String numeroContaOrigem;
+    private String codigoAgenciaDebito;
+    private String numeroContaDebito;
 
-    private String codigoAgenciaDestino;
-    private String numeroContaDestino;
-
+    private String codigoAgenciaCredito;
+    private String numeroContaCredito;
+    @NumberFormat(style= Style.CURRENCY, pattern="#,##0.00")
     private BigDecimal valor;
 
-    public String getCodigoAgenciaOrigem() {
-        return codigoAgenciaOrigem;
+    public String getCodigoAgenciaDebito() {
+        return codigoAgenciaDebito;
     }
 
-    public void setCodigoAgenciaOrigem(String codigoAgenciaOrigem) {
-        this.codigoAgenciaOrigem = codigoAgenciaOrigem;
+    public void setCodigoAgenciaDebito(String codigoAgenciaDebito) {
+        this.codigoAgenciaDebito = codigoAgenciaDebito;
     }
 
-    public String getNumeroContaOrigem() {
-        return numeroContaOrigem;
+    public String getNumeroContaDebito() {
+        return numeroContaDebito;
     }
 
-    public void setNumeroContaOrigem(String numeroContaOrigem) {
-        this.numeroContaOrigem = numeroContaOrigem;
+    public void setNumeroContaDebito(String numeroContaDebito) {
+        this.numeroContaDebito = numeroContaDebito;
     }
 
-    public String getCodigoAgenciaDestino() {
-        return codigoAgenciaDestino;
+    public String getCodigoAgenciaCredito() {
+        return codigoAgenciaCredito;
     }
 
-    public void setCodigoAgenciaDestino(String codigoAgenciaDestino) {
-        this.codigoAgenciaDestino = codigoAgenciaDestino;
+    public void setCodigoAgenciaCredito(String codigoAgenciaCredito) {
+        this.codigoAgenciaCredito = codigoAgenciaCredito;
     }
 
-    public String getNumeroContaDestino() {
-        return numeroContaDestino;
+    public String getNumeroContaCredito() {
+        return numeroContaCredito;
     }
 
-    public void setNumeroContaDestino(String numeroContaDestino) {
-        this.numeroContaDestino = numeroContaDestino;
+    public void setNumeroContaCredito(String numeroContaCredito) {
+        this.numeroContaCredito = numeroContaCredito;
     }
 
     public BigDecimal getValor() {
