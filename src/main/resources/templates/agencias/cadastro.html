@@ -20,11 +20,11 @@
 	        
 	        	<div th:replace="fragments/alert"></div>
 	        	
-	            <form method="POST" action="criar" th:object="${request}">
+	            <form method="POST" action="criar" th:object="${agencia}">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
-	                        
-	                        <input type="text" class="form-control" id="codigo" placeholder="Codigo" autofocus="autofocus"
+	                        <label for="codigo">Código Agencia</label>
+	                        <input type="text" class="form-control" id="codigo" autofocus="autofocus"
 	                               name="codigo" required="true"/>
 	                    </div>
 	                 </div>

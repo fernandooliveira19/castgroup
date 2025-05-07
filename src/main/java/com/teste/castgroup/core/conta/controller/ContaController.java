@@ -4,18 +4,23 @@ import com.teste.castgroup.core.conta.model.request.CreditarValorContaRequest;
 import com.teste.castgroup.core.conta.model.request.CriarContaRequest;
 import com.teste.castgroup.core.conta.model.request.DebitarValorContaRequest;
 import com.teste.castgroup.core.conta.model.request.TransferirValorContaRequest;
+import com.teste.castgroup.core.conta.model.response.ContaDetailResponse;
 import com.teste.castgroup.core.conta.model.usecase.CreditarValorContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.CriarContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.DebitarValorContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.TransferirValorContaUseCase;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/contas")
@@ -35,25 +40,47 @@ public class ContaController {
 
 
 
-    @GetMapping("/cadastrar")
+    @GetMapping("/cadastro")
     public String cadastrar(CriarContaRequest request){
         return "contas/cadastro";
+    }
+
+    @GetMapping("/credito")
+    public String credito(CreditarValorContaRequest request){
+        return "contas/credito";
+    }
+
+    @GetMapping("/detalhe")
+    public ModelAndView detalhe(){
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        modelAndView.addObject("numeroConta", "45");
+        return modelAndView;
     }
 
     @PostMapping(path="/criar")
     public String criar(CriarContaRequest request, RedirectAttributes attr){
 
-        criarContaUseCase.handle(request);
+
+        ContaDetailResponse response = criarContaUseCase.handle(request);
+//        ModelMap model = new ModelMap();
+//        model.addAttribute("numeroConta", response.getNumeroConta());
+//        model.addAttribute("codigoAgencia", response.getCodigoAgencia());
+//        model.addAttribute("saldo", response.getSaldo());
+        ModelAndView modelAndView = new ModelAndView("detalhe");
+        modelAndView.addObject("conta", response);
 
         attr.addFlashAttribute("success", "Conta cadastrada com sucesso");
 
-        return "redirect:cadastrar";
+        return "redirect:detalhe";
     }
 
-    @PutMapping(path = "/creditar")
-    public String creditar(@RequestBody CreditarValorContaRequest request){
+    @PostMapping(path = "/creditar")
+    public String creditar(CreditarValorContaRequest request){
+
         creditarValorContaUseCase.handle(request);
-        return "";
+
+
+        return "contas/detalhe";
     }
 
     @PutMapping(path = "/debitar")
@@ -67,6 +94,5 @@ public class ContaController {
         transferirValorContaUseCase.handle(request);
         return "";
     }
-
 
 }

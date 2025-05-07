@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout}"
-	  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+	xmlns:th="http://www.thymeleaf.org">
 <head><meta charset="UTF-8"/></head>
 <body>
 	    <section class="layout-content" layout:fragment="corpo">
@@ -10,7 +10,7 @@
 	                <ul class="navbar-nav mr-auto">
 	                    <li class="nav-item active">
 	                        <i class="oi oi-caret-right"></i>
-	                        <span>Criar Conta</span>
+	                        <span>Creditar conta</span>
 	                    </li>
 	                </ul>
 	            </div>
@@ -20,17 +20,16 @@
 	        
 	        	<div th:replace="fragments/alert"></div>
 	        	
-	            <form action="criar"
-	            		th:object="${request}" method="POST">
+	            <form action="creditar" th:object="${request}" method="POST">
 
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<input type="text" class="form-control" id="codigoAgencia" placeholder="Código Agencia" autofocus="autofocus"
-								   name="codigoAgencia" required="true"/>
+								   name="codigoAgencia" required="true" />
 						</div>
-
 					</div>
-					<div class="form-row">
+
+	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        
 	                        <input type="text" class="form-control" id="numeroConta" placeholder="Numero Conta" autofocus="autofocus"
@@ -38,10 +37,15 @@
 	                    </div>
 	                 </div>
 
-
-
-
-	                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+					<div class="form-row">
+							 <div class="form-group col-md-6">
+								 <input type="text" class="form-control" id="valor" placeholder="Valor" autofocus="autofocus"
+										name="valor" required="true" data-mask="#.##0,00"
+										data-mask-reverse="true"/>
+					 </div>
+	                    
+					</div>
+	                <button type="submit" class="btn btn-primary btn-sm">Creditar</button>
 	                
 	            </form>
 	        </div>

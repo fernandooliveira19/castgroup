@@ -1,6 +1,7 @@
 package com.teste.castgroup.core.conta.model.entity;
 
 import com.teste.castgroup.core.agencia.model.entity.Agencia;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -20,6 +21,7 @@ public class Conta {
     private Agencia agencia;
 
     private String numero;
+    @Column(nullable = false, columnDefinition="DECIMAL(7,2) DEFAULT 0.00")
     private BigDecimal saldo;
 
 
