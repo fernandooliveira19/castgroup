@@ -70,12 +70,14 @@ public class ContaController {
     }
 
     @PostMapping(path = "/creditar")
-    public String creditar(CreditarValorContaRequest request){
+    public ModelAndView creditar(CreditarValorContaRequest request){
 
-        creditarValorContaUseCase.handle(request);
+        ContaDetailResponse response = creditarValorContaUseCase.handle(request);
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        modelAndView.addObject("conta", response);
 
 
-        return "contas/detalhe";
+        return modelAndView;
     }
 
     @PutMapping(path = "/debitar")
