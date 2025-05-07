@@ -12,18 +12,13 @@ import com.teste.castgroup.core.conta.model.usecase.CriarContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.DebitarValorContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.TransferirValorContaUseCase;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/contas")
@@ -71,36 +66,73 @@ public class ContaController {
         return "contas/busca";
     }
 
+    @GetMapping("/detalhe/{codigoAgencia}/{numeroConta}")
+    public String detalhe(@PathVariable("codigoAgencia") String codigoAgencia, @PathVariable("numeroConta") String numeroConta) {
+        ModelAndView modelAndView = new ModelAndView();
+
+
+        return "contas/detalhe";
+    }
+
     @PostMapping(path="/criar")
-    public ModelAndView criar(CriarContaRequest request, RedirectAttributes attr){
+    public ModelAndView criar(@ModelAttribute CriarContaRequest request){
 
-        ContaDetailResponse response = criarContaUseCase.handle(request);
-        ModelAndView modelAndView = getModelAndViewDetail(response);
-
-        attr.addFlashAttribute("success", "Conta cadastrada com sucesso");
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        ContaDetailResponse response = new ContaDetailResponse();
+        try {
+            response = criarContaUseCase.handle(request);
+            modelAndView.addObject("success", "Conta cadastrada com sucesso");
+        } catch (Exception e) {
+            modelAndView.addObject("fail", e.getMessage());
+        }
+        modelAndView.addObject("conta", response);
 
         return modelAndView;
     }
 
     @PostMapping(path = "/creditar")
     public ModelAndView creditar(CreditarValorContaRequest request){
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        ContaDetailResponse response = new ContaDetailResponse();
 
-        ContaDetailResponse response = creditarValorContaUseCase.handle(request);
-        return getModelAndViewDetail(response);
+        try {
+            response = creditarValorContaUseCase.handle(request);
+            modelAndView.addObject("success", "Conta creditada com sucesso");
+        } catch (Exception e) {
+            modelAndView.addObject("fail", e.getMessage());
+        }
+        modelAndView.addObject("conta", response);
+        return modelAndView;
 
     }
 
     @PostMapping(path = "/debitar")
     public ModelAndView debitar(DebitarValorContaRequest request){
-        ContaDetailResponse response = debitarValorContaUseCase.handle(request);
-        return getModelAndViewDetail(response);
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        ContaDetailResponse response = new ContaDetailResponse();
+        try {
+            response = debitarValorContaUseCase.handle(request);
+            modelAndView.addObject("success", "Conta debitada com sucesso");
+        } catch (Exception e) {
+            modelAndView.addObject("fail", e.getMessage());
+        }
+        modelAndView.addObject("conta", response);
+        return modelAndView;
 
     }
 
     @PostMapping(path = "/transferir")
     public ModelAndView transferir(TransferirValorContaRequest request){
-        ContaDetailResponse response = transferirValorContaUseCase.handle(request);
-        return getModelAndViewDetail(response);
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
+        ContaDetailResponse response = new ContaDetailResponse();
+        try {
+            response = transferirValorContaUseCase.handle(request);
+            modelAndView.addObject("success", "Transferencia realizada com sucesso");
+        } catch (Exception e) {
+            modelAndView.addObject("fail", e.getMessage());
+        }
+        modelAndView.addObject("conta", response);
+        return modelAndView;
 
     }
 

@@ -40,7 +40,7 @@ public class DebitarValorContaService implements DebitarValorContaUseCase {
                     response.add(new ContaDetailResponse(conta.getAgencia().getCodigo(), conta.getNumero(),conta.getSaldo()));
                 },
                 () -> {
-                    throw new RuntimeException(messageUtils.getMessage(CastGroupMessages.CONTA_NAO_ENCONTRADA.getMessageKey()));
+                    throw new ContaException(messageUtils.getMessage(CastGroupMessages.CONTA_NAO_ENCONTRADA.getMessageKey()));
                 }
         );
 
@@ -50,7 +50,7 @@ public class DebitarValorContaService implements DebitarValorContaUseCase {
     private void validarOperacaoDebito(BigDecimal saldo, BigDecimal valorDebito){
 
         if(valorDebito.compareTo(saldo) > 0){
-            throw new ContaException("Saldo insufiente para a operacao");
+            throw new ContaException(messageUtils.getMessage(CastGroupMessages.CONTA_SALDO_INSUFICIENTE.getMessageKey()));
         }
     }
 }
