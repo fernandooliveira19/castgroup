@@ -2,7 +2,7 @@ package com.teste.castgroup.core.conta.model.service;
 
 import com.teste.castgroup.core.conta.model.entity.Conta;
 import com.teste.castgroup.core.conta.model.exception.ContaException;
-import com.teste.castgroup.core.conta.model.messages.ContaMessages;
+import com.teste.castgroup.shared.messages.CastGroupMessages;
 import com.teste.castgroup.core.agencia.model.repository.AgenciaRepository;
 import com.teste.castgroup.core.conta.model.repository.ContaRepository;
 import com.teste.castgroup.core.conta.model.request.CriarContaRequest;
@@ -40,7 +40,7 @@ public class CriarContaService implements CriarContaUseCase {
 
                     if(contaRepository.findByAgenciaAndNumero(agencia.getCodigo(), request.getNumeroConta())
                             .isPresent()) {
-                        throw new ContaException(messageUtils.getMessage(ContaMessages.CONTA_JA_CADASTRADA.getMessageKey()));
+                        throw new ContaException(messageUtils.getMessage(CastGroupMessages.CONTA_JA_CADASTRADA.getMessageKey()));
                     }
 
                     Conta conta = new Conta().criar(agencia, request.getNumeroConta());
@@ -48,7 +48,7 @@ public class CriarContaService implements CriarContaUseCase {
                     response.add(new ContaDetailResponse(agencia.getCodigo(), conta.getNumero(),conta.getSaldo()));
                 },
                 () -> {
-                    throw new ContaException(messageUtils.getMessage(ContaMessages.AGENCIA_NAO_ENCONTRADA.getMessageKey()));
+                    throw new ContaException(messageUtils.getMessage(CastGroupMessages.AGENCIA_NAO_ENCONTRADA.getMessageKey()));
                 }
         );
 

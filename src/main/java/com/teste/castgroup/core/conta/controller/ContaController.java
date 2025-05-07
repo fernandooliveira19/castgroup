@@ -75,8 +75,7 @@ public class ContaController {
     public ModelAndView criar(CriarContaRequest request, RedirectAttributes attr){
 
         ContaDetailResponse response = criarContaUseCase.handle(request);
-        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
-        modelAndView.addObject("conta", response);
+        ModelAndView modelAndView = getModelAndViewDetail(response);
 
         attr.addFlashAttribute("success", "Conta cadastrada com sucesso");
 
@@ -87,27 +86,22 @@ public class ContaController {
     public ModelAndView creditar(CreditarValorContaRequest request){
 
         ContaDetailResponse response = creditarValorContaUseCase.handle(request);
-        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
-        modelAndView.addObject("conta", response);
+        return getModelAndViewDetail(response);
 
-
-        return modelAndView;
     }
 
     @PostMapping(path = "/debitar")
     public ModelAndView debitar(DebitarValorContaRequest request){
         ContaDetailResponse response = debitarValorContaUseCase.handle(request);
-        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
-        modelAndView.addObject("conta", response);
-        return modelAndView;
+        return getModelAndViewDetail(response);
+
     }
 
     @PostMapping(path = "/transferir")
     public ModelAndView transferir(TransferirValorContaRequest request){
         ContaDetailResponse response = transferirValorContaUseCase.handle(request);
-        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
-        modelAndView.addObject("conta", response);
-        return modelAndView;
+        return getModelAndViewDetail(response);
+
     }
 
     @GetMapping(path = "/buscar")
@@ -115,6 +109,10 @@ public class ContaController {
 
         ContaDetailResponse response = buscarContaUseCase.handle(new BuscarContaRequest(codigoAgencia, numeroConta));
 
+        return getModelAndViewDetail(response);
+    }
+
+    private static ModelAndView getModelAndViewDetail(ContaDetailResponse response) {
         ModelAndView modelAndView = new ModelAndView("contas/detalhe");
         modelAndView.addObject("conta", response);
         return modelAndView;

@@ -1,15 +1,11 @@
 package com.teste.castgroup.core.conta.model.service;
 
-import com.teste.castgroup.core.agencia.model.repository.AgenciaRepository;
-import com.teste.castgroup.core.conta.model.entity.Conta;
 import com.teste.castgroup.core.conta.model.exception.ContaException;
-import com.teste.castgroup.core.conta.model.messages.ContaMessages;
+import com.teste.castgroup.shared.messages.CastGroupMessages;
 import com.teste.castgroup.core.conta.model.repository.ContaRepository;
 import com.teste.castgroup.core.conta.model.request.BuscarContaRequest;
-import com.teste.castgroup.core.conta.model.request.CriarContaRequest;
 import com.teste.castgroup.core.conta.model.response.ContaDetailResponse;
 import com.teste.castgroup.core.conta.model.usecase.BuscarContaUseCase;
-import com.teste.castgroup.core.conta.model.usecase.CriarContaUseCase;
 import com.teste.castgroup.utils.MessageUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +39,7 @@ public class BuscarContaService implements BuscarContaUseCase {
                             response.add(new ContaDetailResponse(conta.getAgencia().getCodigo(), conta.getNumero(), conta.getSaldo()));
                         },
                         () -> {
-                            throw new ContaException(messageUtils.getMessage(ContaMessages.CONTA_NAO_ENCONTRADA.getMessageKey()));
+                            throw new ContaException(messageUtils.getMessage(CastGroupMessages.CONTA_NAO_ENCONTRADA.getMessageKey()));
                         });
         return response.stream().findAny().orElse(new ContaDetailResponse());
     }

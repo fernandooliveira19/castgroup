@@ -29,9 +29,13 @@ public class AgenciaController {
     @PostMapping(path = "/criar" )
     public String criar(@ModelAttribute CriarAgenciaRequest request, RedirectAttributes attr) {
 
-        criarAgenciaUseCase.handle(request);
+        try {
+            criarAgenciaUseCase.handle(request);
+            attr.addFlashAttribute("success", "Agencia cadastrada com sucesso");
+        }catch (Exception e){
+            attr.addFlashAttribute("fail", e.getMessage());
+        }
 
-        attr.addFlashAttribute("success", "Agencia cadastrada com sucesso");
         return "redirect:cadastrar";
     }
 }

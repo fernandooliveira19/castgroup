@@ -5,6 +5,9 @@ import com.teste.castgroup.core.agencia.model.repository.AgenciaRepository;
 import com.teste.castgroup.core.agencia.model.request.CriarAgenciaRequest;
 import com.teste.castgroup.core.agencia.model.response.AgenciaDetailResponse;
 import com.teste.castgroup.core.agencia.model.usecase.CriarAgenciaUseCase;
+import com.teste.castgroup.core.conta.model.exception.ContaException;
+import com.teste.castgroup.shared.messages.CastGroupMessages;
+import com.teste.castgroup.utils.MessageUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +19,11 @@ import java.util.List;
 public class CriarAgenciaService implements CriarAgenciaUseCase {
 
     private final AgenciaRepository agenciaRepository;
+    private final MessageUtils messageUtils;
 
-    public CriarAgenciaService(AgenciaRepository agenciaRepository) {
+    public CriarAgenciaService(AgenciaRepository agenciaRepository, MessageUtils messageUtils) {
         this.agenciaRepository = agenciaRepository;
+        this.messageUtils = messageUtils;
     }
 
     @Override
@@ -27,7 +32,7 @@ public class CriarAgenciaService implements CriarAgenciaUseCase {
         List<AgenciaDetailResponse> response = new ArrayList<>();
         agenciaRepository.findByCodigo(request.getCodigo()).ifPresentOrElse(
                 agencia -> {
-                    throw new RuntimeException("");
+                    throw new ContaException(messageUtils.getMessage(CastGroupMessages.AGENCIA_JA_CADASTRADA.getMessageKey()));
                 },
                 () -> {
 

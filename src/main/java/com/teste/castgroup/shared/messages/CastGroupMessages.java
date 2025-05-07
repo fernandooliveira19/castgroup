@@ -1,15 +1,16 @@
-package com.teste.castgroup.core.conta.model.messages;
+package com.teste.castgroup.shared.messages;
 
-public enum ContaMessages {
+public enum CastGroupMessages {
 
     AGENCIA_NAO_ENCONTRADA("agencia.nao.encontrada"),
+    AGENCIA_JA_CADASTRADA("agencia.ja.cadastrada"),
     CONTA_NAO_ENCONTRADA("conta.nao.encontrada"),
     CONTA_JA_CADASTRADA("conta.ja.cadastrada");
 
 
     private final String messageKey;
 
-    ContaMessages(String messageKey) {
+    CastGroupMessages(String messageKey) {
         this.messageKey = messageKey;
     }
 

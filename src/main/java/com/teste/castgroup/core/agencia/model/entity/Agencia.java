@@ -13,6 +13,13 @@ public class Agencia {
 
     private String codigo;
 
+    public Agencia() {
+    }
+
+    public Agencia(UUID id, String codigo) {
+        this.id = id;
+        this.codigo = codigo;
+    }
 
     public Agencia criar(String codigo){
         this.id = UUID.randomUUID();

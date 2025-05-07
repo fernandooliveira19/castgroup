@@ -1,7 +1,7 @@
 package com.teste.castgroup.core.conta.model.service;
 
 import com.teste.castgroup.core.conta.model.exception.ContaException;
-import com.teste.castgroup.core.conta.model.messages.ContaMessages;
+import com.teste.castgroup.shared.messages.CastGroupMessages;
 import com.teste.castgroup.core.conta.model.repository.ContaRepository;
 import com.teste.castgroup.core.conta.model.request.DebitarValorContaRequest;
 import com.teste.castgroup.core.conta.model.response.ContaDetailResponse;
@@ -40,7 +40,7 @@ public class DebitarValorContaService implements DebitarValorContaUseCase {
                     response.add(new ContaDetailResponse(conta.getAgencia().getCodigo(), conta.getNumero(),conta.getSaldo()));
                 },
                 () -> {
-                    throw new RuntimeException(messageUtils.getMessage(ContaMessages.CONTA_NAO_ENCONTRADA.getMessageKey()));
+                    throw new RuntimeException(messageUtils.getMessage(CastGroupMessages.CONTA_NAO_ENCONTRADA.getMessageKey()));
                 }
         );
 

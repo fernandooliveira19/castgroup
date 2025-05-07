@@ -1,7 +1,7 @@
 package com.teste.castgroup.conta.model.service;
 
 import com.teste.castgroup.core.conta.model.exception.ContaException;
-import com.teste.castgroup.core.conta.model.messages.ContaMessages;
+import com.teste.castgroup.shared.messages.CastGroupMessages;
 import com.teste.castgroup.core.agencia.model.repository.AgenciaRepository;
 import com.teste.castgroup.core.conta.model.repository.ContaRepository;
 import com.teste.castgroup.core.conta.model.request.CriarContaRequest;
@@ -45,7 +45,22 @@ class CriarContaServiceUnitTest {
             criarContaService.handle(request);
         });
 
-        Mockito.verify(messageUtils).getMessage(ContaMessages.AGENCIA_NAO_ENCONTRADA.getMessageKey());
+        Mockito.verify(messageUtils).getMessage(CastGroupMessages.AGENCIA_NAO_ENCONTRADA.getMessageKey());
+
+    }
+
+    @Test
+    @DisplayName("Dado agencia e conta existente, quando criar conta, deve retornar erro")
+    void dadoAgenciaContaExistenteNaoEncontradaDeveRetornarErro(){
+        Mockito.when(agenciaRepository.findByCodigo(Mockito.anyString())).thenReturn(Optional.empty());
+
+        CriarContaRequest request = CriarContaRequestDataSupplier.getCriarContaRequest();
+
+        ContaException exception = Assertions.assertThrows(ContaException.class, ()->{
+            criarContaService.handle(request);
+        });
+
+        Mockito.verify(messageUtils).getMessage(CastGroupMessages.AGENCIA_NAO_ENCONTRADA.getMessageKey());
 
     }
 
