@@ -58,20 +58,15 @@ public class ContaController {
     }
 
     @PostMapping(path="/criar")
-    public String criar(CriarContaRequest request, RedirectAttributes attr){
-
+    public ModelAndView criar(CriarContaRequest request, RedirectAttributes attr){
 
         ContaDetailResponse response = criarContaUseCase.handle(request);
-//        ModelMap model = new ModelMap();
-//        model.addAttribute("numeroConta", response.getNumeroConta());
-//        model.addAttribute("codigoAgencia", response.getCodigoAgencia());
-//        model.addAttribute("saldo", response.getSaldo());
-        ModelAndView modelAndView = new ModelAndView("detalhe");
+        ModelAndView modelAndView = new ModelAndView("contas/detalhe");
         modelAndView.addObject("conta", response);
 
         attr.addFlashAttribute("success", "Conta cadastrada com sucesso");
 
-        return "redirect:detalhe";
+        return modelAndView;
     }
 
     @PostMapping(path = "/creditar")

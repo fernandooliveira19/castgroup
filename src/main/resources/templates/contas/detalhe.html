@@ -20,26 +20,29 @@
 	        
 	        	<div th:replace="fragments/alert"></div>
 	        	
-	            <form
-	            		th:object="${conta}" method="post">
+	            <form th:object="${conta}" method="post">
+
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="codigoAgencia">Código Agencia</label>
+							<input type="text" class="form-control" id="codigoAgencia" autofocus="autofocus"
+								   name="codigoAgencia" required="true" th:value="${conta.codigoAgencia}" />
+						</div>
+					</div>
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
-
+							<label for="numeroConta">Número Conta</label>
 							<input type="text" class="form-control" id="numeroConta" placeholder="Numero Conta" autofocus="autofocus"
-																	name="numeroConta" required="true" th:value="${numeroConta}" />
+																	name="numeroConta" required="true" th:value="${conta.numeroConta}" />
 	                    </div>
 	                 </div>
-	                 <div class="form-row">
-	                    <div class="form-group col-md-6">
-	                        <input type="text" class="form-control" id="codigoAgencia" placeholder="Código Agencia" autofocus="autofocus"
-	                               name="codigoAgencia" required="true" />
-						</div>
-	                 </div>
+
 					<div class="form-row">
 							 <div class="form-group col-md-6">
-								 <input type="text" class="form-control" id="saldo" placeholder="Valor" autofocus="autofocus"
+								 <label for="saldo">Saldo</label>
+								 <input type="text" class="form-control" id="saldo"  autofocus="autofocus"
 										name="saldo" required="true" data-mask="#.##0,00"
-										data-mask-reverse="true"/>
+										data-mask-reverse="true" th:value="${conta.saldo}"/>
 					 </div>
 	                    
 					</div>
