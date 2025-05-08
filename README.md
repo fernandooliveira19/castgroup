@@ -14,7 +14,7 @@ A geracao das tabelas de banco de dados, foi realizada com o flyway.
 
 A arquitetura utilizada foi MVC
 
-Utilizacao de alguns conceitos do padrao SOLID, na estrutura do projeto, como Principio de Responsabilidade Unica, Segregação de Interface, Inversão de Dependencia
+Utilizacao de alguns conceitos de CLEANCODE e SOLID, na estrutura do projeto, como Principio de Responsabilidade Unica, Segregação de Interface, Inversão de Dependencia
 
 Testes unitários utilizando Mockito e JUnit
 

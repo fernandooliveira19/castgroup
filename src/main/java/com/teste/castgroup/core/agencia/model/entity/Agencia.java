@@ -1,6 +1,5 @@
 package com.teste.castgroup.core.agencia.model.entity;
 
-import com.teste.castgroup.core.agencia.controller.AgenciaController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
