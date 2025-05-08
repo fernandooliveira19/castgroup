@@ -10,6 +10,7 @@
 ### Decisoes da implementacao
 
 Implementação utilizando Java 21
+
 Foi utilizado o banco de dados em memoria, para nao precisar criar um banco externo.
 A geracao das tabelas de banco de dados, foi realizada com o flyway.
 
@@ -25,7 +26,7 @@ A párte de configuração de acesso por perfil não foi implementado. O exemplo
 
 E a apresentacao do acesso na tela seria controlada atraves de um usuario logado. Exemplo:
 
-# arquivo sidebar.html
+### arquivo sidebar.html
                 <ul class="nav nav-pills" th:if="${isUsuarioAdmin}">
 					<li class="nav-item"><span class="nav-link active" >Agencia</span></li>
 					<li class="nav-item"><a class="nav-link"
@@ -46,12 +47,12 @@ E a apresentacao do acesso na tela seria controlada atraves de um usuario logado
 					</a></li>
 
 
-### Comandos para subir aplicacao
+## Comandos para subir aplicacao
 
-# build docker image
+## build docker image
 
 * $ docker build -t castgroup:v1 .
 
-# run docker container
+## run docker container
 
 * $ docker run -p 8080:8080 castgroup:v1 
