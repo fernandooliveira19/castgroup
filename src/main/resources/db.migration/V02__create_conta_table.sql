@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS conta(
     agencia_id UUID NOT NULL,
     numero VARCHAR(100) NOT NULL,
     saldo NUMERIC(19,2),
+    versao INTEGER,
 
     CONSTRAINT fk_conta_agencia  FOREIGN KEY(agencia_id) REFERENCES agencia(id)
 );
