@@ -1,5 +1,8 @@
 package com.teste.castgroup.conta.model.service;
 
+import com.teste.castgroup.agencia.model.entity.AgenciaDataSupplier;
+import com.teste.castgroup.conta.model.entity.ContaDataSupplier;
+import com.teste.castgroup.core.conta.model.entity.Conta;
 import com.teste.castgroup.core.conta.model.exception.ContaException;
 import com.teste.castgroup.shared.messages.CastGroupMessages;
 import com.teste.castgroup.core.agencia.model.repository.AgenciaRepository;
@@ -41,9 +44,7 @@ class CriarContaServiceUnitTest {
 
         CriarContaRequest request = CriarContaRequestDataSupplier.getCriarContaRequest();
 
-        ContaException exception = Assertions.assertThrows(ContaException.class, ()->{
-            criarContaService.handle(request);
-        });
+        Assertions.assertThrows(ContaException.class, () -> criarContaService.handle(request));
 
         Mockito.verify(messageUtils).getMessage(CastGroupMessages.AGENCIA_NAO_ENCONTRADA.getMessageKey());
 
@@ -52,15 +53,31 @@ class CriarContaServiceUnitTest {
     @Test
     @DisplayName("Dado agencia e conta existente, quando criar conta, deve retornar erro")
     void dadoAgenciaContaExistenteNaoEncontradaDeveRetornarErro(){
-        Mockito.when(agenciaRepository.findByCodigo(Mockito.anyString())).thenReturn(Optional.empty());
+        Mockito.when(agenciaRepository.findByCodigo(Mockito.anyString()))
+                .thenReturn(Optional.of(AgenciaDataSupplier.getAgencia()));
+        Mockito.when(contaRepository.findByAgenciaAndNumero(Mockito.anyString(), Mockito.anyString()))
+                .thenReturn(Optional.of(ContaDataSupplier.getConta()));
 
         CriarContaRequest request = CriarContaRequestDataSupplier.getCriarContaRequest();
 
-        ContaException exception = Assertions.assertThrows(ContaException.class, ()->{
-            criarContaService.handle(request);
-        });
+        Assertions.assertThrows(ContaException.class, ()-> criarContaService.handle(request));
 
-        Mockito.verify(messageUtils).getMessage(CastGroupMessages.AGENCIA_NAO_ENCONTRADA.getMessageKey());
+        Mockito.verify(messageUtils).getMessage(CastGroupMessages.CONTA_JA_CADASTRADA.getMessageKey());
+
+    }
+
+    @Test
+    @DisplayName("Dado agencia e conta inexistente, quando criar conta, deve criar conta")
+    void dadoAgenciaContaInexistenteDeveCriarConta(){
+        Mockito.when(agenciaRepository.findByCodigo(Mockito.anyString()))
+                .thenReturn(Optional.of(AgenciaDataSupplier.getAgencia()));
+        Mockito.when(contaRepository.findByAgenciaAndNumero(Mockito.anyString(), Mockito.anyString()))
+                .thenReturn(Optional.empty());
+
+        CriarContaRequest request = CriarContaRequestDataSupplier.getCriarContaRequest();
+        criarContaService.handle(request);
+
+        Mockito.verify(contaRepository).save(Mockito.any(Conta.class));
 
     }
 

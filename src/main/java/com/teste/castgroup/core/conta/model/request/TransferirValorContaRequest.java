@@ -15,6 +15,17 @@ public class TransferirValorContaRequest {
     @NumberFormat(style= Style.CURRENCY, pattern="#,##0.00")
     private BigDecimal valor;
 
+    public TransferirValorContaRequest() {
+    }
+
+    public TransferirValorContaRequest(String codigoAgenciaDebito, String numeroContaDebito, String codigoAgenciaCredito, String numeroContaCredito, BigDecimal valor) {
+        this.codigoAgenciaDebito = codigoAgenciaDebito;
+        this.numeroContaDebito = numeroContaDebito;
+        this.codigoAgenciaCredito = codigoAgenciaCredito;
+        this.numeroContaCredito = numeroContaCredito;
+        this.valor = valor;
+    }
+
     public String getCodigoAgenciaDebito() {
         return codigoAgenciaDebito;
     }

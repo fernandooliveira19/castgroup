@@ -24,6 +24,15 @@ public class Conta {
     @Column(nullable = false, columnDefinition="DECIMAL(7,2) DEFAULT 0.00")
     private BigDecimal saldo;
 
+    public Conta() {
+    }
+
+    public Conta(UUID id, Agencia agencia, String numero, BigDecimal saldo) {
+        this.id = id;
+        this.agencia = agencia;
+        this.numero = numero;
+        this.saldo = saldo;
+    }
 
     public Conta criar(Agencia agencia, String numero){
         this.id = UUID.randomUUID();
