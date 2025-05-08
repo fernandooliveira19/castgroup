@@ -11,6 +11,8 @@ import com.teste.castgroup.core.conta.model.usecase.CreditarValorContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.CriarContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.DebitarValorContaUseCase;
 import com.teste.castgroup.core.conta.model.usecase.TransferirValorContaUseCase;
+import com.teste.castgroup.shared.messages.CastGroupMessages;
+import com.teste.castgroup.utils.MessageUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,13 +31,18 @@ public class ContaController {
     private final DebitarValorContaUseCase debitarValorContaUseCase;
     private final TransferirValorContaUseCase transferirValorContaUseCase;
     private final BuscarContaUseCase buscarContaUseCase;
+    private final MessageUtils messageUtils;
 
-    public ContaController(CriarContaUseCase criarContaUseCase, CreditarValorContaUseCase creditarValorContaUseCase, DebitarValorContaUseCase debitarValorContaUseCase, TransferirValorContaUseCase transferirValorContaUseCase, BuscarContaUseCase buscarContaUseCase) {
+    private static final String SUCESSO = "success";
+    private static final String FALHA = "fail";
+
+    public ContaController(CriarContaUseCase criarContaUseCase, CreditarValorContaUseCase creditarValorContaUseCase, DebitarValorContaUseCase debitarValorContaUseCase, TransferirValorContaUseCase transferirValorContaUseCase, BuscarContaUseCase buscarContaUseCase, MessageUtils messageUtils) {
         this.criarContaUseCase = criarContaUseCase;
         this.creditarValorContaUseCase = creditarValorContaUseCase;
         this.debitarValorContaUseCase = debitarValorContaUseCase;
         this.transferirValorContaUseCase = transferirValorContaUseCase;
         this.buscarContaUseCase = buscarContaUseCase;
+        this.messageUtils = messageUtils;
     }
 
 
@@ -81,9 +88,9 @@ public class ContaController {
         ContaDetailResponse response = new ContaDetailResponse();
         try {
             response = criarContaUseCase.handle(request);
-            modelAndView.addObject("success", "Conta cadastrada com sucesso");
+            modelAndView.addObject(SUCESSO, messageUtils.getMessage(CastGroupMessages.CONTA_CADASTRADA_SUCESSO.getMessageKey()));
         } catch (Exception e) {
-            modelAndView.addObject("fail", e.getMessage());
+            modelAndView.addObject(FALHA, e.getMessage());
         }
         modelAndView.addObject("conta", response);
 
@@ -97,9 +104,9 @@ public class ContaController {
 
         try {
             response = creditarValorContaUseCase.handle(request);
-            modelAndView.addObject("success", "Conta creditada com sucesso");
+            modelAndView.addObject(SUCESSO, messageUtils.getMessage(CastGroupMessages.CONTA_CREDITADA_SUCESSO.getMessageKey()));
         } catch (Exception e) {
-            modelAndView.addObject("fail", e.getMessage());
+            modelAndView.addObject(FALHA, e.getMessage());
         }
         modelAndView.addObject("conta", response);
         return modelAndView;
@@ -112,9 +119,9 @@ public class ContaController {
         ContaDetailResponse response = new ContaDetailResponse();
         try {
             response = debitarValorContaUseCase.handle(request);
-            modelAndView.addObject("success", "Conta debitada com sucesso");
+            modelAndView.addObject(SUCESSO, messageUtils.getMessage(CastGroupMessages.CONTA_DEBITADA_SUCESSO.getMessageKey()));
         } catch (Exception e) {
-            modelAndView.addObject("fail", e.getMessage());
+            modelAndView.addObject(FALHA, e.getMessage());
         }
         modelAndView.addObject("conta", response);
         return modelAndView;
@@ -127,9 +134,9 @@ public class ContaController {
         ContaDetailResponse response = new ContaDetailResponse();
         try {
             response = transferirValorContaUseCase.handle(request);
-            modelAndView.addObject("success", "Transferencia realizada com sucesso");
+            modelAndView.addObject(SUCESSO, messageUtils.getMessage(CastGroupMessages.CONTA_TRANSFERENCIA_SUCESSO.getMessageKey()));
         } catch (Exception e) {
-            modelAndView.addObject("fail", e.getMessage());
+            modelAndView.addObject(FALHA, e.getMessage());
         }
         modelAndView.addObject("conta", response);
         return modelAndView;
