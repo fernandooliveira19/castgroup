@@ -2,6 +2,8 @@ package com.teste.castgroup.core.agencia.controller;
 
 import com.teste.castgroup.core.agencia.model.request.CriarAgenciaRequest;
 import com.teste.castgroup.core.agencia.model.usecase.CriarAgenciaUseCase;
+import com.teste.castgroup.shared.messages.CastGroupMessages;
+import com.teste.castgroup.utils.MessageUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,10 +16,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AgenciaController {
 
     private final CriarAgenciaUseCase criarAgenciaUseCase;
+    private final MessageUtils messageUtils;
+    private static final String SUCESSO = "success";
+    private static final String FALHA = "fail";
 
-
-    public AgenciaController(CriarAgenciaUseCase criarAgenciaUseCase) {
+    public AgenciaController(CriarAgenciaUseCase criarAgenciaUseCase, MessageUtils messageUtils) {
         this.criarAgenciaUseCase = criarAgenciaUseCase;
+        this.messageUtils = messageUtils;
     }
 
     @GetMapping("/cadastrar")
@@ -31,9 +36,9 @@ public class AgenciaController {
 
         try {
             criarAgenciaUseCase.handle(request);
-            attr.addFlashAttribute("success", "Agencia cadastrada com sucesso");
+            attr.addFlashAttribute(SUCESSO, messageUtils.getMessage(CastGroupMessages.AGENCIA_CADASTRADA_SUCESSO.getMessageKey()));
         }catch (Exception e){
-            attr.addFlashAttribute("fail", e.getMessage());
+            attr.addFlashAttribute(FALHA, e.getMessage());
         }
 
         return "redirect:cadastrar";
